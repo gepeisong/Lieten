@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace就是与此文件对应的Dao接口的全路径-->
+<mapper namespace="com.gps.dao.UserDao" >
+  <!--如下type的User就是mybatis-config.xml中配置的user-->
+  <resultMap id="UserResultMap" type="com.gps.entity.User">
+  	<id column="userId" property="userId"/>
+  	<result column="userName" property="userName"/>
+  	<result column="phoneNum" property="phoneNum"/>
+  	<result column="birthday" property="birthday"/>
+  	<result column="headImage" property="headImage"/>
+  	<result column="sex" property="sex"/>
+  	<result column="age" property="age"/>
+  	<result column="Email" property="Email"/>
+  	<result column="firstDay" property="firstDay"/>
+  	<result column="userRoleId" property="userRoleId"/>
+  	<result column="status" property="status"/>
+  	<result column="sort" property="sort"/>
+  </resultMap>
+<!--自己配置的查询表所有数据的sql-->
+  <select id="getUserInfoByPassWord" resultType="com.gps.entity.User" parameterType="java.util.Map">
+    SELECT u.userId,u.userName,u.phoneNum,u.birthday,u.headImage,u.sex,u.Email,u.firstDay,u.userRoleId,u.status,u.sort FROM USER u WHERE u.userName=#{userName} and u.passWord=#{passWord} and status=1 order by sort asc 
+  </select>
+  
+  <select id="getUserList" resultMap="UserResultMap">
+  	 SELECT u.userId,u.userName,u.phoneNum,u.birthday,u.headImage,u.sex,u.Email,u.firstDay,u.userRoleId,u.status,u.sort FROM USER u WHERE  status=1 order by sort asc 
+  </select>
+  
+  <update id="deleteUserById">
+  	UPDATE user SET status=0 where userId=#{0}
+  </update>
+
+  <update id="updateUserPassWord">
+  	UPDATE user SET password=#{1} where userId=#{0}
+  </update>
+</mapper>

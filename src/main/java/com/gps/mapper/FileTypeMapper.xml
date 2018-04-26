@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace就是与此文件对应的Dao接口的全路径-->
+<mapper namespace="com.gps.dao.FileTypeDao" >
+  <!--如下type的User就是mybatis-config.xml中配置的user-->
+  <resultMap id="FileTypeResultMap" type="com.gps.entity.FileType" >
+  </resultMap>
+<!--自己配置的查询表所有数据的sql-->
+  <select id="getFileTypes" resultMap="FileTypeResultMap">
+     SELECT fileTypeId,fileTypeName,description,status FROM fileType where status=1 order by sort asc
+  </select>
+  <!--  parameterType="String" 可以不写，根据index来获取传过来的参数值 -->
+  <update id="deleteFileTypeById">
+  	UPDATE fileType SET status=0  WHERE fileTypeId=#{0}
+  </update>
+</mapper>
